@@ -1,7 +1,7 @@
 name: NoItemFrameDN
 author: Strahan
 main: com.sylvcraft.NoItemFrameDN
-version: 1.0
+version: 1.21
 description: Removes display name from item when placed in an ItemFrame
 commands:
   nodn:
