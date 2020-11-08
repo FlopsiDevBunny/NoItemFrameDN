@@ -27,6 +27,7 @@ public class PlayerInteractEntity implements Listener {
         ItemStack stck = frame.getItem();
         if (!stck.hasItemMeta()) return;
         if (!stck.getItemMeta().hasDisplayName()) return;
+        e.getPlayer().sendMessage("Special");
         ItemStack wipedItem = plugin.wipeDisplayName(frame.getItem());
         if (wipedItem == null) this.cancel();
         frame.setItem(wipedItem);

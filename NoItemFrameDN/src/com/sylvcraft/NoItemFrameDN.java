@@ -22,6 +22,7 @@ import com.sylvcraft.verclasses.WipeDN_112;
 import com.sylvcraft.verclasses.WipeDN_113;
 import com.sylvcraft.verclasses.WipeDN_114;
 import com.sylvcraft.verclasses.WipeDN_115;
+import com.sylvcraft.verclasses.WipeDN_116;
 import com.sylvcraft.verclasses.WipeDN_18;
 import com.sylvcraft.verclasses.WipeDN_19;
 import com.sylvcraft.commands.nodn;
@@ -42,6 +43,9 @@ public class NoItemFrameDN extends JavaPlugin {
 
   public ItemStack wipeDisplayName(ItemStack item) {
     switch (getServerVersion().get("root")) {
+    case "1.16":
+      WipeDN_116 wipe116 = new WipeDN_116(this, item);
+      return wipe116.getWipedItem();
     case "1.15":
       WipeDN_115 wipe115 = new WipeDN_115(this, item);
       return wipe115.getWipedItem();
