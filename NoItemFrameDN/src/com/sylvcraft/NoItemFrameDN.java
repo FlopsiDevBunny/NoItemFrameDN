@@ -1,99 +1,114 @@
 package com.sylvcraft;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+import com.sylvcraft.commands.nodn;
 import com.sylvcraft.events.ItemSpawn;
 import com.sylvcraft.events.PlayerInteractEntity;
-import com.sylvcraft.verclasses.WipeDN_110;
-import com.sylvcraft.verclasses.WipeDN_111;
-import com.sylvcraft.verclasses.WipeDN_112;
-import com.sylvcraft.verclasses.WipeDN_113;
-import com.sylvcraft.verclasses.WipeDN_114;
-import com.sylvcraft.verclasses.WipeDN_115;
-import com.sylvcraft.verclasses.WipeDN_116;
-import com.sylvcraft.verclasses.WipeDN_18;
-import com.sylvcraft.verclasses.WipeDN_19;
-import com.sylvcraft.commands.nodn;
+import com.sylvcraft.verclasses.Functions_110;
+import com.sylvcraft.verclasses.Functions_111;
+import com.sylvcraft.verclasses.Functions_112;
+import com.sylvcraft.verclasses.Functions_113;
+import com.sylvcraft.verclasses.Functions_18;
+import com.sylvcraft.verclasses.Functions_19;
 
 public class NoItemFrameDN extends JavaPlugin {
-  private List<String> enabledUsers = new ArrayList<>();
-  
   @Override
   public void onEnable() {
     saveDefaultConfig();
-    enabledUsers = getConfig().getStringList("enabled");
-
     PluginManager pm = getServer().getPluginManager();
     pm.registerEvents(new PlayerInteractEntity(this), this);
     pm.registerEvents(new ItemSpawn(this), this);
     getCommand("nodn").setExecutor(new nodn(this));
   }
 
-  public ItemStack wipeDisplayName(ItemStack item) {
+  public ItemStack recallname(ItemStack item) {
     switch (getServerVersion().get("root")) {
-    case "1.16":
-      WipeDN_116 wipe116 = new WipeDN_116(this, item);
-      return wipe116.getWipedItem();
-    case "1.15":
-      WipeDN_115 wipe115 = new WipeDN_115(this, item);
-      return wipe115.getWipedItem();
-    case "1.14":
-      WipeDN_114 wipe114 = new WipeDN_114(this, item);
-      return wipe114.getWipedItem();
     case "1.13":
-      WipeDN_113 wipe113 = new WipeDN_113(this, item);
-      return wipe113.getWipedItem();
+      Functions_113 f113 = new Functions_113(this, item);
+      f113.renameItem();
+      return f113.getItemStack();
     case "1.12":
-      WipeDN_112 wipe112 = new WipeDN_112(this, item);
-      return wipe112.getWipedItem();
+      Functions_112 f112 = new Functions_112(this, item);
+      f112.renameItem();
+      return f112.getItemStack();
     case "1.11":
-      WipeDN_111 wipe111 = new WipeDN_111(this, item);
-      return wipe111.getWipedItem();
+      Functions_111 f111 = new Functions_111(this, item);
+      f111.renameItem();
+      return f111.getItemStack();
     case "1.10":
-      WipeDN_110 wipe110 = new WipeDN_110(this, item);
-      return wipe110.getWipedItem();
+      Functions_110 f110 = new Functions_110(this, item);
+      f110.renameItem();
+      return f110.getItemStack();
     case "1.9":
-      WipeDN_19 wipe19 = new WipeDN_19(this, item);
-      return wipe19.getWipedItem();
+      Functions_19 f19 = new Functions_19(this, item);
+      f19.renameItem();
+      return f19.getItemStack();
     case "1.8":
-      WipeDN_18 wipe18 = new WipeDN_18(this, item);
-      return wipe18.getWipedItem();
+      Functions_18 f18 = new Functions_18(this, item);
+      f18.renameItem();
+      return f18.getItemStack();
     default:
-      return null;
+      ItemMeta im = item.getItemMeta();
+      if (!im.hasDisplayName()) return item;
+      
+      NamespacedKey origDN = new NamespacedKey(this, "origDN");
+      im.getPersistentDataContainer().set(origDN, PersistentDataType.STRING, im.getDisplayName());
+      im.setDisplayName("");
+      item.setItemMeta(im);
+      return item;
     }
   }
   
-  public boolean isEnabled(Player p) {
-    return enabledUsers.contains(p.getUniqueId().toString());
-  }
-  
-  public boolean toggleEnabled(Player p) {
-    if (enabledUsers.contains(p.getUniqueId().toString())) {
-      enabledUsers.remove(p.getUniqueId().toString());
-      updateConfig();
-      return false;
-    }
+  public ItemStack wipeDisplayName(ItemStack item) {
+    if (!item.hasItemMeta()) return item;
     
-    enabledUsers.add(p.getUniqueId().toString());
-    updateConfig();
-    return true;
-  }
-  
-  private void updateConfig() {
-    getConfig().set("enabled", enabledUsers);
-    saveConfig();
+    ItemMeta im = item.getItemMeta();
+    if (!im.hasDisplayName()) return item;
+    
+    switch (getServerVersion().get("root")) {
+    case "1.13":
+      Functions_113 f113 = new Functions_113(this, item);
+      f113.wipeDisplayName();
+      return f113.getItemStack();
+    case "1.12":
+      Functions_112 f112 = new Functions_112(this, item);
+      f112.wipeDisplayName();
+      return f112.getItemStack();
+    case "1.11":
+      Functions_111 f111 = new Functions_111(this, item);
+      f111.wipeDisplayName();
+      return f111.getItemStack();
+    case "1.10":
+      Functions_110 f110 = new Functions_110(this, item);
+      f110.wipeDisplayName();
+      return f110.getItemStack();
+    case "1.9":
+      Functions_19 f19 = new Functions_19(this, item);
+      f19.wipeDisplayName();
+      return f19.getItemStack();
+    case "1.8":
+      Functions_18 f18 = new Functions_18(this, item);
+      f18.wipeDisplayName();
+      return f18.getItemStack();
+    default:
+      NamespacedKey origDN = new NamespacedKey(this, "origDN");
+      im.getPersistentDataContainer().set(origDN, PersistentDataType.STRING, im.getDisplayName());
+      im.setDisplayName("");
+      item.setItemMeta(im);
+      return item;
+    }
   }
   
   private Map<String, String> getServerVersion() {
@@ -104,6 +119,22 @@ public class NoItemFrameDN extends JavaPlugin {
     retval.put("root", verdata[0] + "." + verdata[1]);
     retval.put("full", StringUtils.join(verdata, " ", 0, verdata.length));
     return retval;
+  }
+  
+  public boolean isEnabled(Player p) {
+    return getConfig().getBoolean("players." + p.getUniqueId() + ".status", getConfig().getBoolean("config.default", false));
+  }
+  
+  public boolean toggleEnabled(Player p) {
+    if (isEnabled(p)) {
+      getConfig().set("players." + p.getUniqueId() + ".status", false);
+      saveConfig();
+      return false;
+    }
+
+    getConfig().set("players." + p.getUniqueId() + ".status", true);
+    saveConfig();
+    return true;
   }
   
   public void msg(String msgCode, CommandSender sender) {

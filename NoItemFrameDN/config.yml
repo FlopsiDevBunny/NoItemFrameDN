@@ -2,3 +2,5 @@ messages:
   access-denied: '&cAccess denied!'
   nodn-enabled: '&bDisplay name for items placed into items will now be hidden'
   nodn-disabled: '&bDisplay name for items placed into items will now be visible'
+config:
+  default: false
