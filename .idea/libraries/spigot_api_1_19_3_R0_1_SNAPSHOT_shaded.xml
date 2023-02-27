@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="spigot-api-1.19.3-R0.1-SNAPSHOT-shaded">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../HavenCore/depend/spigot-api-1.19.3-R0.1-SNAPSHOT-shaded.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../HavenCore/depend/spigot-api-1.19.3-R0.1-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../HavenCore/depend/spigot-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../HavenCore/depend/spigot-1.19.3-R0.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
